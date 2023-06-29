@@ -9,5 +9,8 @@ if __name__ == "__main__":
         ["tag1", "tag2", "tag3"],
     ]
     s = taggeditemset(list(map(lambda tlist: taggeditem(None, tlist), taglist)))
+    
     f = list(s.contain("tag2"))
+    g = list(s.containall(["tag2", "tag1"]))
+    h = list(s.containany(["tag2", "tag1"]))
     print()
