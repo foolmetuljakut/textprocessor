@@ -70,10 +70,6 @@ class searchexpr:
             if isinstance(structure[i], list):
                 structure[i] = this.op2filter(structure[i])
 
-
-        # bug: for "tag1 & tag2 | tag3"
-        #       the search is only conducted on items that already
-        #       fulfill "tag1 & tag2"
         if this.issimple(structure):
             if structure[0] == basicop.UNION.value:
                 pass
