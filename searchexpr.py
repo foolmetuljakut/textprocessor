@@ -70,16 +70,18 @@ class searchexpr:
             if isinstance(structure[i], list):
                 structure[i] = this.op2filter(structure[i])
 
+
+        # bug: for "tag1 & tag2 | tag3"
+        #       the search is only conducted on items that already
+        #       fulfill "tag1 & tag2"
         if this.issimple(structure):
             if structure[0] == basicop.UNION.value:
                 pass
             elif structure[0] == basicop.DISJOINT.value:
                 pass
             elif structure[0] == basicop.OR.value:
-                if isinstance(structure[1], filter):
-                    structure = taggeditemset(list(structure[1])).contain(structure[2])
-                elif isinstance(structure[2], filter):
-                    structure = taggeditemset(list(structure[2])).contain(structure[1])
+                if isinstance(structure[1], filter) and isinstance(structure[2], filter):
+                    structure = filter(lambda it: True, set(list(structure[1]) + list(structure[2])))
                 else:
                     structure = this.setref.containany(structure[1:]) 
             elif structure[0] == basicop.AND.value:
@@ -104,4 +106,4 @@ class searchexpr:
         # now simple expressions are replaced by filters
         results = list(filt)
 
-        print()
+        return results

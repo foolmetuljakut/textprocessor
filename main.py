@@ -7,6 +7,7 @@ if __name__ == "__main__":
         ["tag1", "tag3"],
         ["tag2", "tag3"],
         ["tag1", "tag2", "tag3"],
+        ["tag1", "tag2", "tag3", "tag4"],
     ]
     s = taggeditemset(list(map(lambda tlist: taggeditem(None, tlist), taglist)))
 
@@ -15,7 +16,10 @@ if __name__ == "__main__":
     h = list(s.containany(["tag2", "tag1"]))
 
     expr = searchexpr("tag1 & tag2 | tag3", s)
-    expr.decompose()
+    print(list(map(lambda titem: str(titem.tags), expr.decompose())))
+
+    expr = searchexpr("tag1 & tag2 | tag3 & tag4", s)
+    print(list(map(lambda titem: str(titem.tags), expr.decompose())))
 
     # continue with https://stackoverflow.com/a/35445045
     print()
